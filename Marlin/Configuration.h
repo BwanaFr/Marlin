@@ -76,7 +76,7 @@
 #define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
+#define STRING_SPLASH_LINE2 "TronXY X5S"         // will be shown during bootup in line 2
 
 /**
  * *** VENDORS PLEASE READ ***
@@ -413,9 +413,9 @@
                                   // is more than PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
 
     //My printer PID
-  #define DEFAULT_Kp 23.39
-  #define DEFAULT_Ki 1.55
-  #define DEFAULT_Kd 88.50
+  #define DEFAULT_Kp 17.11
+  #define DEFAULT_Ki 1.43
+  #define DEFAULT_Kd 51.05
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
