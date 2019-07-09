@@ -1,9 +1,9 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
- * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ bool GCodeParser::volumetric_enabled;
 #endif
 
 #if ENABLED(TEMPERATURE_UNITS_SUPPORT)
-  TempUnit GCodeParser::input_temp_units;
+  TempUnit GCodeParser::input_temp_units = TEMPUNIT_C;
 #endif
 
 char *GCodeParser::command_ptr,
@@ -142,27 +142,23 @@ void GCodeParser::parse(char *p) {
       // Skip spaces to get the numeric part
       while (*p == ' ') p++;
 
-      // Bail if there's no command code number
-      // Prusa MMU2 has T?/Tx/Tc commands
-      #if DISABLED(PRUSA_MMU2)
-        if (!NUMERIC(*p)) return;
-      #endif
-
-      // Save the command letter at this point
-      // A '?' signifies an unknown command
-      command_letter = letter;
-
-
       #if ENABLED(PRUSA_MMU2)
         if (letter == 'T') {
           // check for special MMU2 T?/Tx/Tc commands
           if (*p == '?' || *p == 'x' || *p == 'c') {
+            command_letter = letter;
             string_arg = p;
             return;
           }
         }
       #endif
 
+      // Bail if there's no command code number
+      if (!NUMERIC(*p)) return;
+
+      // Save the command letter at this point
+      // A '?' signifies an unknown command
+      command_letter = letter;
 
       // Get the code number - integer digits only
       codenum = 0;

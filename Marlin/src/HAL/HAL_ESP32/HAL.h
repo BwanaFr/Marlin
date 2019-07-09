@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  * Copyright (c) 2016 Bob Cousins bobcousins42@googlemail.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,6 +75,8 @@ extern portMUX_TYPE spinlock;
 
 typedef int16_t pin_t;
 
+#define HAL_SERVO_LIB Servo
+
 // --------------------------------------------------------------------------
 // Public Variables
 // --------------------------------------------------------------------------
@@ -96,7 +98,7 @@ void _delay_ms(int delay);
 
 int freeMemory(void);
 
-void analogWrite(int pin, int value);
+void analogWrite(pin_t pin, int value);
 
 // EEPROM
 void eeprom_write_byte(uint8_t *pos, unsigned char value);
@@ -121,6 +123,7 @@ void HAL_adc_start_conversion(uint8_t adc_pin);
 
 // Enable hooks into idle and setup for HAL
 #define HAL_IDLETASK 1
-#define HAL_INIT 1
+#define BOARD_INIT() HAL_init_board();
 void HAL_idletask(void);
 void HAL_init(void);
+void HAL_init_board(void);

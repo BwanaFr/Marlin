@@ -1,9 +1,9 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
- * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@
 
 #include "../lcdprint.h"
 #include "../fontutils.h"
+#include "../../libs/numtostr.h"
 #include "../ultralcd.h"
 
 #include "../../sd/cardreader.h"
@@ -161,14 +162,14 @@ void MarlinUI::set_font(const MarlinFont font_nr) {
     // Determine text space needed
     #ifndef STRING_SPLASH_LINE2
       constexpr uint8_t text_total_height = MENU_FONT_HEIGHT,
-                        text_width_1 = (sizeof(STRING_SPLASH_LINE1) - 1) * (MENU_FONT_WIDTH),
+                        text_width_1 = uint8_t(sizeof(STRING_SPLASH_LINE1) - 1) * uint8_t(MENU_FONT_WIDTH),
                         text_width_2 = 0;
     #else
-      constexpr uint8_t text_total_height = (MENU_FONT_HEIGHT) * 2,
-                        text_width_1 = (sizeof(STRING_SPLASH_LINE1) - 1) * (MENU_FONT_WIDTH),
-                        text_width_2 = (sizeof(STRING_SPLASH_LINE2) - 1) * (MENU_FONT_WIDTH);
+      constexpr uint8_t text_total_height = uint8_t(MENU_FONT_HEIGHT) * 2,
+                        text_width_1 = uint8_t(sizeof(STRING_SPLASH_LINE1) - 1) * uint8_t(MENU_FONT_WIDTH),
+                        text_width_2 = uint8_t(sizeof(STRING_SPLASH_LINE2) - 1) * uint8_t(MENU_FONT_WIDTH);
     #endif
-    constexpr uint8_t text_max_width = MAX(text_width_1, text_width_2),
+    constexpr uint8_t text_max_width = _MAX(text_width_1, text_width_2),
                       rspace = width - (START_BMPWIDTH);
 
     int8_t offx, offy, txt_base, txt_offx_1, txt_offx_2;
@@ -233,7 +234,7 @@ void MarlinUI::init_lcd() {
     OUT_WRITE(LCD_RESET_PIN, LOW); // perform a clean hardware reset
     _delay_ms(5);
     OUT_WRITE(LCD_RESET_PIN, HIGH);
-    _delay_ms(5); // delay to allow the display to initalize
+    _delay_ms(5); // delay to allow the display to initialize
   #endif
 
   #if PIN_EXISTS(LCD_RESET)

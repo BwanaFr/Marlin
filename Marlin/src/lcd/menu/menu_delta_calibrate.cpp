@@ -1,9 +1,9 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
- * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 void _man_probe_pt(const float &rx, const float &ry) {
   do_blocking_move_to(rx, ry, Z_CLEARANCE_BETWEEN_PROBES);
   ui.synchronize();
-  move_menu_scale = MAX(PROBE_MANUALLY_STEP, MIN_STEPS_PER_SEGMENT / float(DEFAULT_XYZ_STEPS_PER_UNIT));
+  move_menu_scale = _MAX(PROBE_MANUALLY_STEP, MIN_STEPS_PER_SEGMENT / float(DEFAULT_XYZ_STEPS_PER_UNIT));
   ui.goto_screen(lcd_move_z);
 }
 
@@ -56,7 +56,6 @@ void _man_probe_pt(const float &rx, const float &ry) {
       host_prompt_do(PROMPT_USER_CONTINUE, PSTR("Delta Calibration in progress"), PSTR("Continue"));
     #endif
     while (wait_for_user) idle();
-    KEEPALIVE_STATE(IN_HANDLER);
     ui.goto_previous_screen_no_defer();
     return current_position[Z_AXIS];
   }
@@ -73,7 +72,7 @@ void _man_probe_pt(const float &rx, const float &ry) {
   }
 
   void _lcd_delta_calibrate_home() {
-    enqueue_and_echo_commands_P(PSTR("G28"));
+    queue.inject_P(PSTR("G28"));
     ui.goto_screen(_lcd_calibrate_homing);
   }
 
@@ -94,17 +93,17 @@ void _recalc_delta_settings() {
 void lcd_delta_settings() {
   START_MENU();
   MENU_BACK(MSG_DELTA_CALIBRATE);
-  MENU_ITEM_EDIT_CALLBACK(float51, MSG_DELTA_HEIGHT, &delta_height, delta_height - 10, delta_height + 10, _recalc_delta_settings);
+  MENU_ITEM_EDIT_CALLBACK(float52sign, MSG_DELTA_HEIGHT, &delta_height, delta_height - 10, delta_height + 10, _recalc_delta_settings);
   #define EDIT_ENDSTOP_ADJ(LABEL,N) MENU_ITEM_EDIT_CALLBACK(float43, LABEL, &delta_endstop_adj[_AXIS(N)], -5, 5, _recalc_delta_settings)
   EDIT_ENDSTOP_ADJ("Ex",A);
   EDIT_ENDSTOP_ADJ("Ey",B);
   EDIT_ENDSTOP_ADJ("Ez",C);
-  MENU_ITEM_EDIT_CALLBACK(float51, MSG_DELTA_RADIUS, &delta_radius, delta_radius - 5, delta_radius + 5, _recalc_delta_settings);
+  MENU_ITEM_EDIT_CALLBACK(float52sign, MSG_DELTA_RADIUS, &delta_radius, delta_radius - 5, delta_radius + 5, _recalc_delta_settings);
   #define EDIT_ANGLE_TRIM(LABEL,N) MENU_ITEM_EDIT_CALLBACK(float43, LABEL, &delta_tower_angle_trim[_AXIS(N)], -5, 5, _recalc_delta_settings)
   EDIT_ANGLE_TRIM("Tx",A);
   EDIT_ANGLE_TRIM("Ty",B);
   EDIT_ANGLE_TRIM("Tz",C);
-  MENU_ITEM_EDIT_CALLBACK(float51, MSG_DELTA_DIAG_ROD, &delta_diagonal_rod, delta_diagonal_rod - 5, delta_diagonal_rod + 5, _recalc_delta_settings);
+  MENU_ITEM_EDIT_CALLBACK(float52sign, MSG_DELTA_DIAG_ROD, &delta_diagonal_rod, delta_diagonal_rod - 5, delta_diagonal_rod + 5, _recalc_delta_settings);
   END_MENU();
 }
 

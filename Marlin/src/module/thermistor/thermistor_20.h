@@ -1,9 +1,9 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
- * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#pragma once
 
 // PT100 with INA826 amp on Ultimaker v2.0 electronics
 // The PT100 in the Ultimaker v2.0 electronics has a high sample value for a high temperature.
-// This does not match the normal thermistor behaviour so we need to set the following defines
+// This does not match the normal thermistor behavior so we need to set the following defines
 #if THERMISTOR_HEATER_0 == 20
   #define HEATER_0_RAW_HI_TEMP 16383
   #define HEATER_0_RAW_LO_TEMP 0
