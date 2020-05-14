@@ -463,9 +463,9 @@
                                   // is more than PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
 
     //My printer PID
-  #define DEFAULT_Kp 17.11
-  #define DEFAULT_Ki 1.43
-  #define DEFAULT_Kd 51.05
+  #define DEFAULT_Kp 11.67
+  #define DEFAULT_Ki 0.90
+  #define DEFAULT_Kd 37.84
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
@@ -802,7 +802,7 @@
  *
  * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
  */
-#define S_CURVE_ACCELERATION
+//#define S_CURVE_ACCELERATION
 
 //===========================================================================
 //============================= Z Probe Options =============================
